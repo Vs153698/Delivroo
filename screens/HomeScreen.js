@@ -1,18 +1,32 @@
 import { SafeAreaView, ScrollView } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Header from "../components/HomeScreenComponent/Header";
 import SearchBar from "../components/HomeScreenComponent/SearchBar";
 import Categories from "../components/HomeScreenComponent/Categories";
 import FeaturedRow from "../components/HomeScreenComponent/FeaturedRow";
+import { Sanityclient } from "../Sanity";
+import { FeaturedDataFetchQuery } from "../SanityQueries";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const [FeaturedCategory, setFeaturedCategory] = useState([]);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
   }, []);
+  useEffect(() => {
+    Sanityclient.fetch(FeaturedDataFetchQuery)
+      .then((data) => {
+        console.log("Dtata", data);
+        setFeaturedCategory(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <SafeAreaView className="bg-white pt-10">
       <Header />
