@@ -10,3 +10,11 @@ export const FeaturedDataFetchQuery = `
       },
     }
 `;
+
+export const CategoryFetchQuery = `
+*[_type == "category"]{
+  _id,
+  name,
+  image
+  }
+`;

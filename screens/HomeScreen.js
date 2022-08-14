@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, Text } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Header from "../components/HomeScreenComponent/Header";
@@ -11,19 +11,22 @@ import { FeaturedDataFetchQuery } from "../SanityQueries";
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [FeaturedCategory, setFeaturedCategory] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
   }, []);
   useEffect(() => {
+    setIsLoading(true);
     Sanityclient.fetch(FeaturedDataFetchQuery)
       .then((data) => {
-        console.log("Dtata", data);
         setFeaturedCategory(data);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setIsLoading(false);
       });
   }, []);
 
@@ -38,21 +41,15 @@ const HomeScreen = () => {
         className="bg-gray-100"
       >
         <Categories />
-        <FeaturedRow
-          id="1"
-          title="Featured"
-          description="Paid and free food delivery"
-        />
-        <FeaturedRow
-          id="2"
-          title="Tasty Discounts"
-          description="Everyday food and great discounts"
-        />
-        <FeaturedRow
-          id="3"
-          title="Offers near you!"
-          description="Why not try something new today"
-        />
+        {FeaturedCategory?.map((category) => (
+          <FeaturedRow
+            key={category?._id}
+            id={category?._id}
+            title={category?.name}
+            description={category?.short_description}
+            restaurants={category?.restaurants || []}
+          />
+        ))}
       </ScrollView>
     </SafeAreaView>
   );

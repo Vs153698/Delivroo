@@ -37,6 +37,12 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      name: "genre",
+      type: "string",
+      title: "Genre of the restaurant",
+      validation: (Rule) => Rule.required(),
+    },
+    {
       name: "rating",
       type: "number",
       title: "Rating of the restaurant",

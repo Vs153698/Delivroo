@@ -3,7 +3,7 @@ import React from "react";
 import { ArrowRightIcon } from "react-native-heroicons/outline";
 import RestaurantCard from "./RestaurantCard";
 
-const FeaturedRow = ({ id, title, description }) => {
+const FeaturedRow = ({ id, title, description, restaurants }) => {
   return (
     <View>
       <View className="mt-4 flex-row items-center justify-between px-4">
@@ -21,42 +21,21 @@ const FeaturedRow = ({ id, title, description }) => {
         showsHorizontalScrollIndicator={false}
         className="pt-4" // overall scroll view style
       >
-        <RestaurantCard
-        id = "1"
-        imgUrl = "https://assets.cntraveller.in/photos/6182a42236c22389b7a54bf8/master/pass/New%20BLR%20Res.%20lead%20Image.jpg"
-        title = "Mad over the moon"
-        rating = "4.5"
-        genre = "Chinese"
-        address = "123 Main St, New York"
-        short_description = "This is a short description"
-        dishes = {["Beef", "Chicken", "Pork", "Vegetarian"]}
-        long = {20}
-        lat = {20}
-        />
-        <RestaurantCard
-        id = "2"
-        imgUrl = "https://b.zmtcdn.com/data/pictures/5/20089345/78ccb33e96fa7a0cc6b450d81f75e61a_featured_v2.jpg"
-        title = "Mad over the moon"
-        rating = "4.5"
-        genre = "Chinese"
-        address = "123 Main St, New York"
-        short_description = "This is a short description"
-        dishes = {["Beef", "Chicken", "Pork", "Vegetarian"]}
-        long = {20}
-        lat = {20}
-        />
-        <RestaurantCard
-        id = "3"
-        imgUrl = "https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg?cs=srgb&dl=pexels-chan-walrus-941861.jpg&fm=jpg"
-        title = "Mad over the moon"
-        rating = "4.5"
-        genre = "Chinese"
-        address = "123 Main St, New York"
-        short_description = "This is a short description"
-        dishes = {["Beef", "Chicken", "Pork", "Vegetarian"]}
-        long = {20}
-        lat = {20}
-        />
+        {restaurants.length > 0 && restaurants?.map((restaurant) => (
+          <RestaurantCard
+            key={restaurant?._id}
+            id={restaurant?._id}
+            imgUrl={restaurant?.image}
+            title={restaurant?.name}
+            rating={restaurant?.rating}
+            genre={restaurant?.genre}
+            address={restaurant?.address}
+            short_description={restaurant?.short_description}
+            dishes={restaurant?.dishes}
+            long={restaurant?.long}
+            lat={restaurant?.lat}
+          />
+        ))}
       </ScrollView>
     </View>
   );
