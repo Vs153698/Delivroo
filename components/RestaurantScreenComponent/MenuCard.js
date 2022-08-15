@@ -2,9 +2,9 @@ import { View, Text } from "react-native";
 import React from "react";
 import DishRow from "./DishRow";
 
-const MenuCard = ({ dishes }) => {
+const MenuCard = ({ dishes,  restaurantId }) => {
   return (
-    <View>
+    <View className="pb-36">
       <Text className="px-4 pt-6 mb-3 font-bold text-xl ">Menu</Text>
       {dishes?.map((dish) => (
         <DishRow
@@ -14,6 +14,7 @@ const MenuCard = ({ dishes }) => {
           description={dish?.short_description}
           price={dish?.price}
           image={dish?.image}
+          restaurantId={restaurantId}
         />
       ))}
     </View>
