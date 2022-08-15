@@ -28,7 +28,7 @@ const RestaurantScreen = () => {
     });
   }, []);
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <ExpoStatusBar style="light" />
       <RestaurantHeader
         imgUrl={imgUrl}
@@ -38,7 +38,7 @@ const RestaurantScreen = () => {
         address={address}
         short_description={short_description}
       />
-      <MenuCard dishes = {dishes} />
+      <MenuCard dishes={dishes} />
     </ScrollView>
   );
 };
