@@ -17,6 +17,7 @@ const RestaurantHeader = ({
   genre,
   address,
   short_description,
+  isBackButtonVisible,
 }) => {
   const naviagtion = useNavigation();
   return (
@@ -26,12 +27,14 @@ const RestaurantHeader = ({
           source={{ uri: urlFor(imgUrl).url() }}
           className="w-full h-56 bg-gray-300 p-4"
         />
-        <TouchableOpacity
-          onPress={() => naviagtion.goBack()}
-          className="absolute top-10 left-5 p-2 bg-gray-100 rounded-full"
-        >
-          <ArrowLeftIcon size={20} color="#00CCBB" />
-        </TouchableOpacity>
+        {isBackButtonVisible && (
+          <TouchableOpacity
+            onPress={() => naviagtion.goBack()}
+            className="absolute top-10 left-5 p-2 bg-gray-100 rounded-full"
+          >
+            <ArrowLeftIcon size={20} color="#00CCBB" />
+          </TouchableOpacity>
+        )}
       </View>
       <View className="bg-white">
         <View className="px-4 pt-4">

@@ -1,5 +1,5 @@
-import { ScrollView } from "react-native";
-import React, { useLayoutEffect } from "react";
+import { ScrollView, TouchableOpacity } from "react-native";
+import React, { useLayoutEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
 import RestaurantHeader from "../components/RestaurantScreenComponent/RestaurantHeader";
@@ -8,6 +8,8 @@ import BasketIcon from "../components/RestaurantScreenComponent/BasketIcon";
 import { selectBasketItems } from "../features/basketSlice";
 import { useSelector } from "react-redux";
 import RestaurantFooter from "../components/RestaurantFooter";
+import HeaderTitle from "../components/HeaderTitle";
+import { SearchCircleIcon } from "react-native-heroicons/outline";
 
 const RestaurantScreen = () => {
   const {
@@ -28,6 +30,8 @@ const RestaurantScreen = () => {
   } = useRoute();
   const naviagtion = useNavigation();
   const items = useSelector(selectBasketItems);
+  const [statusBarStyle, setStatusBarStyle] = useState("light");
+  const [isBackButtonVisible, setIsBackButtonVisible] = useState(true);
   useLayoutEffect(() => {
     naviagtion.setOptions({
       headerShown: false, // hide header
@@ -40,8 +44,30 @@ const RestaurantScreen = () => {
         contentContainerStyle={{
           paddingBottom: 100,
         }}
+        onScroll={(e) => {
+          if (e.nativeEvent.contentOffset.y > 0) {
+            setStatusBarStyle("dark");
+            setIsBackButtonVisible(false);
+            naviagtion.setOptions({
+              headerShown: true, // show header
+              headerTitle: () => <HeaderTitle name={title} address={address} />,
+              headerRight: () => (
+                <TouchableOpacity>
+                  <SearchCircleIcon size={30} color="#00BBCC" />
+                </TouchableOpacity>
+              ),
+              headerTitleAlign: "center",
+            });
+          } else {
+            setStatusBarStyle("light");
+            setIsBackButtonVisible(true);
+            naviagtion.setOptions({
+              headerShown: false, // hide header
+            });
+          }
+        }}
       >
-        <ExpoStatusBar style="light" />
+        <ExpoStatusBar style={statusBarStyle} />
         <RestaurantHeader
           imgUrl={imgUrl}
           title={title}
@@ -49,9 +75,15 @@ const RestaurantScreen = () => {
           genre={genre}
           address={address}
           short_description={short_description}
+          isBackButtonVisible={isBackButtonVisible}
         />
         <MenuCard dishes={dishes} restaurantId={id} restaurantName={title} />
-        <RestaurantFooter address={address} restaurantName={title} license = {license} city = {city} />
+        <RestaurantFooter
+          address={address}
+          restaurantName={title}
+          license={license}
+          city={city}
+        />
       </ScrollView>
       {items.length > 0 && <BasketIcon />}
     </>
