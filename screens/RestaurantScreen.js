@@ -43,7 +43,7 @@ const RestaurantScreen = () => {
           address={address}
           short_description={short_description}
         />
-        <MenuCard dishes={dishes}  restaurantId={id} />
+        <MenuCard dishes={dishes} restaurantId={id} restaurantName={title} />
       </ScrollView>
       {items.length > 0 && <BasketIcon />}
     </>

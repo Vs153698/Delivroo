@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, Alert } from "react-native";
 import React, { useState } from "react";
 import Currency from "react-currency-formatter";
 import { urlFor } from "../../Sanity";
@@ -7,15 +7,64 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addToBasket,
   removeFromBasket,
+  selectBasketItems,
   selectBasketItemWithId,
 } from "../../features/basketSlice";
 
-const DishRow = ({ id, name, description, price, image,restaurantId }) => {
+const DishRow = ({
+  id,
+  name,
+  description,
+  price,
+  image,
+  restaurantId,
+  restaurantName,
+}) => {
   const dispatch = useDispatch();
   const items = useSelector((state) => selectBasketItemWithId(state, id));
+  const allItems = useSelector(selectBasketItems);
   const [isPressed, setIsPressed] = useState(false);
   const addItemToBasket = () => {
-    dispatch(addToBasket({ id, name, description, price, image,restaurantId }));
+    if (
+      allItems.filter((item) => item.restaurantId === restaurantId).length >
+        0 ||
+      allItems.length === 0
+    ) {
+      dispatch(
+        addToBasket({
+          id,
+          name,
+          description,
+          price,
+          image,
+          restaurantId,
+          restaurantName,
+        })
+      );
+    } else {
+      Alert.alert(
+        "Are you sure you want to add this item to basket?",
+        `Items from ${allItems[0]?.restaurantName} will be removed from basket`,
+        [
+          { text: "Cancel", onPress: () => {}, style: "cancel" },
+          {
+            text: "OK",
+            onPress: () =>
+              dispatch(
+                addToBasket({
+                  id,
+                  name,
+                  description,
+                  price,
+                  image,
+                  restaurantId,
+                  restaurantName,
+                })
+              ),
+          },
+        ]
+      );
+    }
   };
   const removeItemFromBasket = () => {
     dispatch(removeFromBasket({ id, name, description, price, image }));

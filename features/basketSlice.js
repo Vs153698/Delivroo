@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Alert } from "react-native";
 
 const initialState = {
   items: [],
@@ -10,7 +9,7 @@ export const basketSlice = createSlice({
   initialState,
   reducers: {
     addToBasket: (state, action) => {
-      if (items.length === 0) {
+      if (state.items.length === 0) {
         state.items = [...state.items, action.payload];
       } else {
         const isRestaurantSame = state.items.filter(
@@ -19,7 +18,6 @@ export const basketSlice = createSlice({
         if (isRestaurantSame.length > 0) {
           state.items = [...state.items, action.payload];
         } else {
-            <Alert ></Alert>
           state.items = [action.payload];
         }
       }
