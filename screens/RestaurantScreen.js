@@ -5,6 +5,9 @@ import { urlFor } from "../Sanity";
 import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
 import RestaurantHeader from "../components/RestaurantScreenComponent/RestaurantHeader";
 import MenuCard from "../components/RestaurantScreenComponent/MenuCard";
+import BasketIcon from "../components/RestaurantScreenComponent/BasketIcon";
+import { selectBasketItems } from "../features/basketSlice";
+import { useSelector } from "react-redux";
 
 const RestaurantScreen = () => {
   const {
@@ -22,24 +25,28 @@ const RestaurantScreen = () => {
     },
   } = useRoute();
   const naviagtion = useNavigation();
+  const items = useSelector(selectBasketItems);
   useLayoutEffect(() => {
     naviagtion.setOptions({
       headerShown: false, // hide header
     });
   }, []);
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <ExpoStatusBar style="light" />
-      <RestaurantHeader
-        imgUrl={imgUrl}
-        title={title}
-        rating={rating}
-        genre={genre}
-        address={address}
-        short_description={short_description}
-      />
-      <MenuCard dishes={dishes} />
-    </ScrollView>
+    <>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <ExpoStatusBar style="light" />
+        <RestaurantHeader
+          imgUrl={imgUrl}
+          title={title}
+          rating={rating}
+          genre={genre}
+          address={address}
+          short_description={short_description}
+        />
+        <MenuCard dishes={dishes}  restaurantId={id} />
+      </ScrollView>
+      {items.length > 0 && <BasketIcon />}
+    </>
   );
 };
 
