@@ -1,13 +1,13 @@
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
+import { ScrollView } from "react-native";
 import React, { useLayoutEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { urlFor } from "../Sanity";
 import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
 import RestaurantHeader from "../components/RestaurantScreenComponent/RestaurantHeader";
 import MenuCard from "../components/RestaurantScreenComponent/MenuCard";
 import BasketIcon from "../components/RestaurantScreenComponent/BasketIcon";
 import { selectBasketItems } from "../features/basketSlice";
 import { useSelector } from "react-redux";
+import RestaurantFooter from "../components/RestaurantFooter";
 
 const RestaurantScreen = () => {
   const {
@@ -22,6 +22,8 @@ const RestaurantScreen = () => {
       dishes,
       long,
       lat,
+      license,
+      city,
     },
   } = useRoute();
   const naviagtion = useNavigation();
@@ -33,7 +35,12 @@ const RestaurantScreen = () => {
   }, []);
   return (
     <>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingBottom: 100,
+        }}
+      >
         <ExpoStatusBar style="light" />
         <RestaurantHeader
           imgUrl={imgUrl}
@@ -44,6 +51,7 @@ const RestaurantScreen = () => {
           short_description={short_description}
         />
         <MenuCard dishes={dishes} restaurantId={id} restaurantName={title} />
+        <RestaurantFooter address={address} restaurantName={title} license = {license} city = {city} />
       </ScrollView>
       {items.length > 0 && <BasketIcon />}
     </>

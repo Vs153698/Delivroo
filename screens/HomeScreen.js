@@ -1,10 +1,4 @@
-import {
-  ActivityIndicator,
-  RefreshControl,
-  SafeAreaView,
-  ScrollView,
-  Text,
-} from "react-native";
+import { RefreshControl, SafeAreaView, ScrollView } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Header from "../components/HomeScreenComponent/Header";
@@ -14,6 +8,7 @@ import FeaturedRow from "../components/HomeScreenComponent/FeaturedRow";
 import { Sanityclient } from "../Sanity";
 import { FeaturedDataFetchQuery } from "../SanityQueries";
 import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
+import FooterHomepage from "../components/FooterHomePage";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -65,6 +60,7 @@ const HomeScreen = () => {
             restaurants={category?.restaurants || []}
           />
         ))}
+        <FooterHomepage />
       </ScrollView>
     </SafeAreaView>
   );

@@ -31,9 +31,20 @@ export default {
       title: "Longitude of the restaurant",
     },
     {
+      name: "Chicago",
+      type: "number",
+      title: "License number of the restaurant",
+    },
+    {
       name: "address",
       type: "string",
       title: "Address of the restaurant",
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: "city",
+      type: "string",
+      title: "City of the restaurant",
       validation: (Rule) => Rule.required(),
     },
     {

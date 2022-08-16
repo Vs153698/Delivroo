@@ -16,6 +16,8 @@ const RestaurantCard = ({
   dishes,
   long,
   lat,
+  license,
+  city,
 }) => {
   const navigation = useNavigation();
   return (
@@ -32,6 +34,8 @@ const RestaurantCard = ({
           dishes,
           long,
           lat,
+          license,
+          city,
         });
       }}
       className="bg-white mr-3 shadow rounded-lg"
