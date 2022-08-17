@@ -1,15 +1,16 @@
 import { ScrollView, TouchableOpacity } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
 import RestaurantHeader from "../components/RestaurantScreenComponent/RestaurantHeader";
 import MenuCard from "../components/RestaurantScreenComponent/MenuCard";
 import BasketIcon from "../components/RestaurantScreenComponent/BasketIcon";
 import { selectBasketItems } from "../features/basketSlice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import RestaurantFooter from "../components/RestaurantFooter";
 import HeaderTitle from "../components/HeaderTitle";
 import { SearchCircleIcon } from "react-native-heroicons/outline";
+import { setRestaurant } from "../features/restaurantSlice";
 
 const RestaurantScreen = () => {
   const {
@@ -28,10 +29,28 @@ const RestaurantScreen = () => {
       city,
     },
   } = useRoute();
+  const dispatch = useDispatch();
+
   const naviagtion = useNavigation();
   const items = useSelector(selectBasketItems);
   const [statusBarStyle, setStatusBarStyle] = useState("light");
   const [isBackButtonVisible, setIsBackButtonVisible] = useState(true);
+  useEffect(() => {
+    dispatch(
+      setRestaurant({
+        id,
+        imgUrl,
+        title,
+        rating,
+        genre,
+        address,
+        short_description,
+        dishes,
+        license,
+        city,
+      })
+    );
+  }, []);
   useLayoutEffect(() => {
     naviagtion.setOptions({
       headerShown: false, // hide header
