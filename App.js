@@ -3,7 +3,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Provider } from "react-redux";
 import { TailwindProvider } from "tailwindcss-react-native";
 import BasketScreen from "./screens/BasketScreen";
+import DeliveryScreen from "./screens/DeliveryScreen";
 import HomeScreen from "./screens/HomeScreen";
+import PreparingOrderScreen from "./screens/PreparingOrderScreen";
 import RestaurantScreen from "./screens/RestaurantScreen";
 import { store } from "./store";
 const Stack = createNativeStackNavigator();
@@ -24,6 +26,15 @@ export default function App() {
                 headerShown: false,
               }}
             />
+            <Stack.Screen
+              name="PreparingScreen"
+              component={PreparingOrderScreen}
+              options={{
+                presentation: "fullScreenModal",
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen name="Delivery" component={DeliveryScreen} />
           </Stack.Navigator>
         </TailwindProvider>
       </Provider>
