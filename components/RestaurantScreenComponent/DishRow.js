@@ -19,6 +19,7 @@ const DishRow = ({
   image,
   restaurantId,
   restaurantName,
+  ...props
 }) => {
   const dispatch = useDispatch();
   const items = useSelector((state) => selectBasketItemWithId(state, id));
@@ -39,6 +40,7 @@ const DishRow = ({
           image,
           restaurantId,
           restaurantName,
+          ...props
         })
       );
     } else {

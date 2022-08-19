@@ -31,7 +31,7 @@ export default {
       title: "Longitude of the restaurant",
     },
     {
-      name: "Chicago",
+      name: "license",
       type: "number",
       title: "License number of the restaurant",
     },
@@ -61,7 +61,7 @@ export default {
         Rule.required().min(0).max(5).error("Rating must be between 0 and 5"),
     },
     {
-      name: "type",
+      name: "category",
       title: "Category",
       validation: (Rule) => Rule.required(),
       type: "reference",

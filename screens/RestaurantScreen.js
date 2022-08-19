@@ -48,6 +48,8 @@ const RestaurantScreen = () => {
         dishes,
         license,
         city,
+        long,
+      lat,
       })
     );
   }, []);
@@ -96,7 +98,7 @@ const RestaurantScreen = () => {
           short_description={short_description}
           isBackButtonVisible={isBackButtonVisible}
         />
-        <MenuCard dishes={dishes} restaurantId={id} restaurantName={title} />
+        <MenuCard dishes={dishes} restaurantId={id} restaurantName={title} long={long} lat={lat} />
         <RestaurantFooter
           address={address}
           restaurantName={title}

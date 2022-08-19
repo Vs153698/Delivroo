@@ -7,8 +7,10 @@ import DeliveryScreen from "./screens/DeliveryScreen";
 import HomeScreen from "./screens/HomeScreen";
 import PreparingOrderScreen from "./screens/PreparingOrderScreen";
 import RestaurantScreen from "./screens/RestaurantScreen";
+import SearchSceen from "./screens/SearchSceen";
 import { store } from "./store";
 const Stack = createNativeStackNavigator();
+
 
 export default function App() {
   return (
@@ -35,6 +37,7 @@ export default function App() {
               }}
             />
             <Stack.Screen name="Delivery" component={DeliveryScreen} />
+            <Stack.Screen name="Search" component={SearchSceen} />
           </Stack.Navigator>
         </TailwindProvider>
       </Provider>

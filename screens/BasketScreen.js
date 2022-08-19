@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import React, { useMemo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { selectrestaurantItems } from "../features/restaurantSlice";
 import {
   removeFromBasket,
   selectBasketItems,
@@ -24,7 +23,6 @@ const BasketScreen = () => {
   const [groupedItemsList, setGroupedItemsList] = useState([]);
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const restaurant = useSelector(selectrestaurantItems);
   const total = useSelector(selectBasketTotal);
   const items = useSelector(selectBasketItems);
   // Here we are grouping items with same id together

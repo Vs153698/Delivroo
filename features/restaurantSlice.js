@@ -12,6 +12,8 @@ const initialState = {
     dishes: null,
     license: null,
     city: null,
+    long: null,
+    lat:null,
   },
 };
 
