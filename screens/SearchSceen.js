@@ -11,6 +11,10 @@ import { CategoryDataFetch } from "../SanityQueries";
 import { Sanityclient } from "../Sanity";
 import { XCircleIcon } from "react-native-heroicons/solid";
 import RestaurantCard from "../components/SearchScreenComponents/RestaurantCard";
+import { selectBasketItems } from "../features/basketSlice";
+import BasketIcon from "../components/RestaurantScreenComponent/BasketIcon";
+import { useSelector } from "react-redux";
+import NoResultPage from "../components/NoResultPage";
 
 const SearchSceen = () => {
   const navigation = useNavigation();
@@ -18,6 +22,7 @@ const SearchSceen = () => {
   const { title, imgUrl } = route.params;
   const [FetchedData, setFetchedData] = useState([]);
   const [isCancelled, setIsCancelled] = useState(false);
+  const items = useSelector(selectBasketItems);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -34,7 +39,8 @@ const SearchSceen = () => {
     setIsCancelled(false);
   }, [title]);
   return (
-    <SafeAreaView className="pt-10">
+    <>
+    {FetchedData.length > 0 ? <SafeAreaView className="pt-10">
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="flex-row items-center px-4 py-2">
           <TouchableOpacity
@@ -60,15 +66,17 @@ const SearchSceen = () => {
         </View>
         <View className="p-4">
           {FetchedData?.map((item) => (
-            <>
-              {item._type === "restaurant" && (
-                <RestaurantCard key={item._id} item={item} />
-              )}
-            </>
+            <View key={item._id}>
+              {item._type === "restaurant" && <RestaurantCard item={item} />}
+            </View>
           ))}
         </View>
       </ScrollView>
+      {items.length > 0 && <BasketIcon />}
     </SafeAreaView>
+  : <NoResultPage/>  
+  }
+    </>
   );
 };
 
